@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[20]:
+
+
 import math
 from OpenGL import GL
 from array import array
@@ -69,35 +75,48 @@ def compilaShaders():
 def cubo():
     posicao = array(
         "f", [
-            -0.5, -0.5, -0.5,  # V0
-            0.5, -0.5, -0.5,   # V1
-            0.5, 0.5, -0.5,    # V2
-            -0.5, 0.5, -0.5,   # V3
-            -0.5, -0.5, 0.5,   # V4
-            0.5, -0.5, 0.5,    # V5
-            0.5, 0.5, 0.5,     # V6
-            -0.5, 0.5, 0.5     # V7
+            -0.5, 0.5, -0.5,    # V0 0
+            -0.5, 0.5, -0.5,    # V0 1 
+            -0.5, 0.5, -0.5,    # V0 2
+            0.5, 0.5, -0.5,     # V1 3
+            0.5, 0.5, -0.5,     # V1 4
+            -0.5, 0.5, 0.5,     # V2 5
+            0.5, 0.5, 0.5,      # V3 6
+            -0.5, -0.5, -0.5,   # V4 7
+            -0.5, -0.5, -0.5,   # V4 8
+            -0.5, -0.5, -0.5,   # V4 9
+            -0.5, -0.5, 0.5,    # V5 10
+            0.5, -0.5, 0.5,     # V6 11
+            0.5, -0.5, -0.5,    # V7 12
+            0.5, -0.5, -0.5     # V7 13
         ]
     )
-
+   
     texture = array("f", [
-        1/4, 1/3,
-        2/4, 1/3,
-        2/4, 2/3,
-        1/4, 2/3,
-        3/4, 1/3,
-        4/4, 1/3,
-        4/4, 2/3,
-        3/4, 2/3
+        1/4, 1,    # 0 1 0
+        0, 2/3,    # 0 2 1  
+        1, 2/3,    # 0 3 2
+        2/4, 1,    # 1 1 3
+        3/4, 2/3,  # 1 2 4
+        1/4, 2/3,  # 2   5
+        2/4, 2/3,  # 3   6
+        0,  1/3,   # 4 1 7
+        1,  1/3,   # 4 2 8
+        1/4,  0,   # 4 3 9
+        1/4, 1/3,  # 5   10
+        2/4, 1/3,  # 6   11
+        3/4, 1/3,  # 7 1 12
+        2/4, 0     # 7 2 13
+        
     ])
 
     indices = array("I", [
-        0, 1, 2, 2, 3, 0,  # Face frontal
-        1, 5, 6, 6, 2, 1,  # Face direita
-        4, 7, 6, 6, 5, 4,  # Face traseira
-        0, 3, 7, 7, 4, 0,  # Face esquerda
-        3, 2, 6, 6, 7, 3,  # Face superior
-        0, 4, 5, 5, 1, 0   # Face inferior
+        5, 10, 11, 11, 5, 6,  # Face frontal ok
+        6, 11, 12, 12, 6, 4,  # Face direita ok
+        4, 12, 8, 8, 4, 2,  # Face traseira ok
+        5, 10, 1, 1, 10, 7,  # Face esquerda 
+        5, 0, 6, 6, 0, 3,  # Face superior ok
+        10, 9, 13, 13, 10, 11   # Face inferior ok
     ])
 
     VAO = GL.glGenVertexArrays(1)
@@ -172,7 +191,7 @@ def desenha():
     rotation_angle += 0.01  # Incremento do ângulo de rotação
 
     projection = glm.perspective(math.pi/4,800/600,0.1,100)
-    camera = glm.lookAt(glm.vec3(0,0,3),glm.vec3(0,0,0),glm.vec3(0,1,0))
+    camera = glm.lookAt(glm.vec3(0,1.5,3),glm.vec3(0,0,0),glm.vec3(0,1,0))
 
 
     model = glm.translate(glm.vec3(0,0,0)) * glm.rotate(rotation_angle,glm.vec3(0,1,0))
@@ -208,3 +227,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
